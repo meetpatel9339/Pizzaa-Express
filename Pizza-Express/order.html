@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>PIZZA-Xpress</title>
+		
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" href="css/bootstrap.css">       
+        <link rel="stylesheet" href="css/bootstrap-responsive.css">
+        <link rel="stylesheet" href="css/custom-styles.css">
+        <link rel="stylesheet" href="css/component.css">
+       
+        <script src="js/modernizr.custom.js"></script>
+        <script src="js/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+
+		<script>
+		    var sum = 0;
+		    var selectedItems = [];
+
+		    function check(form) {
+		        var itemDropdown = form.item;
+		        var sizeDropdown = form.size;
+
+		        // Get selected item and size values
+		        var item = itemDropdown.options[itemDropdown.selectedIndex].value;
+		        var size = sizeDropdown.options[sizeDropdown.selectedIndex].value;
+
+
+		        // Set the price on the basis of selection
+		        var price = 0;
+		        if (item == 'Pizza')						        //pizza
+		        {
+
+		            if (size == 'Small') {
+		                price = 150;
+		            }
+		            else if (size == 'Medium') {
+		                price = 200;
+		            }
+		            else if (size == 'Large') {
+		                price = 250;
+		            }
+
+
+		        }
+		        else if (item == 'Garlic Bread') 					//garlic bread
+		        {
+
+		            if (size == 'Small') {
+		                price = 120;
+		            }
+		            else if (size == 'Medium') {
+		                price = 160;
+		            }
+		            else if (size == 'Large') {
+		                price = 180;
+		            }
+
+		        }
+		        else if (item == 'Burger') 					//garlic bread
+		        {
+
+		            if (size == 'Small') {
+		                price = 35;
+		            }
+		            else if (size == 'Medium') {
+		                price = 60;
+		            }
+		            else if (size == 'Large') {
+		                price = 100;
+		            }
+
+		        }
+		        else if (item == 'fanta') 					//fanta
+		        {
+
+		            if (size == 'Small') {
+		                price = 20;
+		            }
+		            else if (size == 'Medium') {
+		                price = 25;
+		            }
+		            else if (size == 'Large') {
+		                price = 30;
+		            }
+
+		        }
+		        else if (item == 'Pasta')						   //pasta
+		        {
+
+		            if (size == 'Small') {
+		                price = 90;
+		            }
+		            else if (size == 'Medium') {
+		                price = 110;
+		            }
+		            else if (size == 'Large') {
+		                price = 130;
+		            }
+
+		        }
+		        else if (item == 'French Fries') 						   //french fries
+		        {
+
+		            if (size == 'Small') {
+		                price = 60;
+		            }
+		            else if (size == 'Medium') {
+		                price = 80;
+		            }
+		            else if (size == 'Large') {
+		                price = 100;
+		            }
+
+		        }
+		        else if (item == 'Aloo Tikki') 						   //french fries
+		        {
+
+		            if (size == 'Small') {
+		                price = 25;
+		            }
+		            else if (size == 'Medium') {
+		                price = 50;
+		            }
+		            else if (size == 'Large') {
+		                price = 70;
+		            }
+
+		        }
+		        else if (item == 'coca cola')                                                  //coca cola
+		        {
+
+		            if (size == 'Small') {
+		                price = 15;
+		            }
+		            else if (size == 'Medium') {
+		                price = 20;
+		            }
+		            else if (size == 'Large') {
+		                price = 30;
+		            }
+
+		        }
+		        else if (item == 'slice')                                                  //coca cola
+		        {
+
+		            if (size == 'Small') {
+		                price = 15;
+		            }
+		            else if (size == 'Medium') {
+		                price = 20;
+		            }
+		            else if (size == 'Large') {
+		                price = 30;
+		            }
+
+		        }
+		        if (price != 0) {									// If both the items are selected
+		            var quantity = parseInt(prompt('Enter Quantity'));
+		            sum += price * quantity;
+
+		            var selectedItem = [item, size, price, quantity];
+		            selectedItems.push(selectedItem);
+		            updateSelectedTable();
+		        }
+		        else {
+		            alert('Please select an Item and the Size'); 		// If at least one item is not selected
+		        }
+
+		    }
+
+		    function updateSelectedTable() {
+		        var table = document.getElementById('selected_items');
+
+		        // Delete all rows, except header row
+		        for (var i = table.rows.length - 1; i > 0; i--) {
+		            table.deleteRow(i);
+		        }
+
+		        // Add rows to the table, by using the data of selectedItems
+		        for (var i = 0; i < selectedItems.length; i++) {
+		            var item = selectedItems[i];
+
+		            var row = table.insertRow();
+		            var itemCell = row.insertCell(-1);
+		            var sizeCell = row.insertCell(-1);
+		            var priceCell = row.insertCell(-1);
+		            var quantityCell = row.insertCell(-1);
+		            var itemPriceCell = row.insertCell(-1);
+
+		            itemCell.innerHTML = item[0];
+		            sizeCell.innerHTML = item[1];
+		            priceCell.innerHTML = item[2];
+		            quantityCell.innerHTML = item[3];
+		            itemPriceCell.innerHTML = item[2] * item[3];
+		        }
+
+		        // Update the total price
+		        var totalPriceElement = document.getElementById('total_price');
+		        totalPriceElement.innerHTML = sum;
+		    }
+
+		    function resetOrder() {
+		        var response = confirm('Are you sure you want to reset the order?');
+		        if (response == true) {
+		            sum = 0;
+		            selectedItems = [];
+		            updateSelectedTable();
+		        }
+		    }
+
+		    function placeOrder() {
+		        var message = 'Your total bill amount is: ' + sum + '\nAre you sure you want to place the order?';
+		        var response = confirm(message);
+		        if (response == true) {
+		            window.location('index.html?total_price=' + sum);
+		        }
+		    }
+		    function logOut() {
+		        var response = confirm('Are you sure you want to logout?');
+		        if (response == true) {
+		            window.location = 'index.html';
+		        }
+		    }
+
+	     </script>
+		<style>
+			body
+			     {
+				//background:url("fightfortheamazonas.jpg")center;
+			     }
+			form 
+      			     {
+				float:left;
+				margin-left: 100px;
+			     }
+			table,th,td 
+			     {
+				border: 1px solid #ddd;
+				text-align: left;
+			     }
+			section 
+                             {
+				margin-left: 1000px;
+         		     }
+		</style>
+	</head>
+
+	<body>
+       
+            <div class="header-wrapper">
+                <div class="container">
+                    <div class="row-fluid">
+                    
+                        <div class="site-name">
+                            <h1>PIZZA-Xpress</h1>
+                        </div>
+                    
+                    
+                        <div class="menu-icons">
+                            <ul>
+                                <li><img src="img/FB.ico" height="45" width="45"> </li>
+                                <li><img src="img/insta.ic.png" height="50" width="50"/> </li>
+                             
+                            </ul>
+                        </div>
+                        </div>
+                </div>
+            </div>
+           <div class="container">
+            <div class="menu">
+                
+                        <div class="navbar">
+                            <a class="btn btn-navbar" style="data-toggle: collapse; data-target: .nav-collapse">
+                                <i class="fw-icon-th-list"></i>
+                            </a>
+                            <div class="nav-collapse collapse">
+                                <ul class="nav">
+                                   
+                                    <li><a href="menu.html">Menu</a></li>
+                                     <li class="active"><a href="order.html">Order</a></li>
+                                     <li><a onClick="logOut()" >Log Out</a></li>
+                                   
+                                   
+                                </ul>
+                            </div><!--/.nav-collapse -->
+                        </div>
+						<div class="mini-menu">
+            
+          </div>
+                    
+            </div>
+            </div>
+           <center> <h1>Place Your Order</h1></center>
+            
+            
+            <div class="container bg-white">
+                <div class="row-fluid">
+                    <div class="span12 ">
+                        <div class="main-caption">
+	
+      
+    
+    		
+		<div class="dropdown">
+<center>
+			<form>
+				<span class="style5">Select Item:
+				</span>
+				<select name="item" class="style5" >
+					<option> - ITEM - </option>
+					<option value="Pizza">Pizza</option>
+					<option value="Garlic Bread">Garlic Bread</option>
+					<option value="Burger">Burger</option>
+					<option value="Aloo Tikki">Aloo Tikki</option>
+					<option value="Pasta">Pasta</option>
+					<option value="French Fries">French fries</option>
+					<option value="coca cola">coca cola</option>
+					<option value="fanta">fanta</option>
+					<option value="slice">slice</option>
+				</select><span class="style5">
+
+			<br><br>	Select Size:
+				</span>
+				<select name="size" class="style5" >
+					<option> - Size - </option>
+					<option value="Small">Small</option>
+					<option value="Medium">Medium</option>
+					<option value="Large">Large</option>
+				</select>
+
+				<br>
+                <input type="button" class="btn" value="Add" name="add" onclick="check(this.form)" 
+                    class="style5">
+				<span class="style5">
+				<br/><br/>
+
+				</span>
+
+				<table id="selected_items" width="500" border="1" >
+					<tr >
+									
+<th width=""><font color="#474856">Item.</font></th>
+<th width=""><font color="#474856">Size.</font></th>
+<th width=""><font color="#474856">Price.</font></th>
+<th width=""><font color="#474856">Quantity.</font></th>
+<th width=""><font color="#474856">Sub-Total.</font></th>
+
+				</tr>
+				</table>
+
+				<span class="style5">
+
+				<br/><br/>
+				Total Price: <span id="total_price">0</span>
+				<br/><br/>
+
+				</span>
+
+				<input type="button" class="btn" value="Place Order" name="place_order" 
+                    onclick="placeOrder()" class="style5"/>
+				<input type="button" class="btn" value="Reset Order" name="reset_order" 
+                    onclick="resetOrder()" class="style5"/>
+				<span class="style5"> </span>
+								
+
+			</form>
+            </center>
+
+			
+		</div><br/><br/><br/><br/><br/><br/><br/>
+        </div>
+		
+ 	   
+	</body>
+</html>
